@@ -1,8 +1,8 @@
 package my.rahul.springbootplayground.api;
 
+import lombok.RequiredArgsConstructor;
 import my.rahul.springbootplayground.model.Person;
 import my.rahul.springbootplayground.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +10,11 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @RequestMapping("api/v1/person")
 @RestController
 public class PersonController {
     private final PersonService personService;
-
-    @Autowired
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
 
     @PostMapping
     public void addPerson(@Valid @NonNull @RequestBody Person person) {

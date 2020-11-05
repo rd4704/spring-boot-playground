@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +22,20 @@ public class PersonDataAccessService implements PersonDao {
 
     @Override
     public int insertPerson(UUID id, Person person) {
-        return 0;
+        final String sql = "INSERT INTO person (id, name) values(uuid_generate_v4(), ?)";
+
+        // define query arguments
+        Object[] params = new Object[] { person.getName() };
+
+        // define SQL types of the arguments
+        int[] types = new int[] { Types.VARCHAR };
+
+        // execute insert query to insert the data
+        int row = jdbcTemplate.update(sql, params, types);
+
+        System.out.println(row + " row inserted.");
+
+        return 1;
     }
 
     @Override
